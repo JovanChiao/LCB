@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCB测评体系</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background-color: #0F172A;
+            color: #fff;
+        }
+        /* 顶部横幅（Hero Section）- 复刻原网页深色背景+圆点装饰 */
+        .hero {
+            width: 100%;
+            height: 100vh;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.1) 0%, transparent 40%),
+                        radial-gradient(circle at 70% 60%, rgba(255,255,255,0.1) 0%, transparent 40%);
+            z-index: 0;
+        }
+        .hero .tag {
+            background: #165DFF;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 20px;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 900;
+            line-height: 1.2;
+            z-index: 1;
+        }
+        .hero h1 .lcb-title {
+            color: #fff;
+        }
+        .hero h1 .system-title {
+            color: #165DFF;
+            text-shadow: 0 0 15px rgba(22, 93, 255, 0.8);
+        }
+        .hero .desc {
+            font-size: 18px;
+            color: #94A3B8;
+            margin: 20px 0 40px;
+            max-width: 800px;
+            z-index: 1;
+        }
+        .hero .demo-btn {
+            background: #165DFF;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 1;
+            transition: background 0.3s;
+        }
+        .hero .demo-btn:hover {
+            background: #0F4CD5;
+        }
+
+        /* 板块通用样式 - 复刻原网页内边距+容器宽度 */
+        .section {
+            width: 100%;
+            padding: 80px 20px;
+        }
+        .section-container {
+            width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .section-subtitle {
+            font-size: 16px;
+            color: #94A3B8;
+            margin-bottom: 30px;
+        }
+
+        /* 板块1：安全领导力测评（对应原施工现场视觉识别） */
+        .leadership-section .content {
+            display: flex;
+            gap: 30px;
+        }
+        .leadership-section .media-area {
+            width: 60%;
+            background: #1E293B;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .leadership-section .media-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .leadership-section .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(22, 93, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .leadership-section .play-btn:hover {
+            background: rgba(22, 93, 255, 1);
+        }
+        .leadership-section .text-area {
+            width: 40%;
+        }
+        .leadership-section .text-area h3 {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .leadership-section .text-area p {
+            font-size: 16px;
+            color: #94A3B8;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .leadership-section .tab-item {
+            background: #1E293B;
+            border-radius: 4px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .leadership-section .tab-item .tab-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+        .leadership-section .tab-item .tab-value {
+            color: #94A3B8;
+            font-size: 14px;
+        }
+
+        /* 板块2：安全文化（对应原BIM数字化安全管理） */
+        .culture-section .content {
+            display: flex;
+            gap: 30px;
+        }
+        .culture-section .text-area {
+            width: 50%;
+        }
+        .culture-section .text-card {
+            background: #1E293B;
+            border-radius: 8px;
+            padding: 24px;
+            color: #E2E8F0;
+            line-height: 1.8;
+            font-size: 16px;
+            height: 400px;
+            overflow-y: auto;
+        }
+        .culture-section .enter-btn {
+            background: #22C55E;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .culture-section .enter-btn:hover {
+            background: #16A34A;
+        }
+        .culture-section .media-area {
+            width: 50%;
+            background: #10B981;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .culture-section .media-area img {
+            width: 100%;
+            height: 80%;
+            object-fit: contain;
+        }
+        .culture-section .media-area h3 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .culture-section .media-area .status {
+            color: #D1FAE5;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* 板块3：安全管理行为（对应原全自动吊装路径规划） */
+        .behavior-section .content {
+            display: flex;
+            gap: 30px;
+        }
+        .behavior-section .media-area {
+            width: 50%;
+            background: #8B5CF6;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .behavior-section .media-area img {
+            width: 100%;
+            height: 80%;
+            object-fit: contain;
+        }
+        .behavior-section .media-area h3 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .behavior-section .text-area {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .behavior-section .text-area p {
+            font-size: 16px;
+            color: #94A3B8;
+            line-height: 1.6;
+            margin: 12px 0 20px;
+        }
+        .behavior-section .enter-btn {
+            background: #8B5CF6;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .behavior-section .enter-btn:hover {
+            background: #7C3AED;
+        }
+
+        /* 响应式适配（小屏自动调整布局） */
+        @media (max-width: 1200px) {
+            .section-container {
+                width: 90%;
+            }
+            .leadership-section .content,
+            .culture-section .content,
+            .behavior-section .content {
+                flex-direction: column;
+            }
+            .leadership-section .media-area,
+            .leadership-section .text-area,
+            .culture-section .text-area,
+            .culture-section .media-area,
+            .behavior-section .media-area,
+            .behavior-section .text-area {
+                width: 100%;
+            }
+            .hero h1 {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部横幅：复刻原网页样式，替换为LCB内容 -->
+    <div class="hero">
+        <div class="tag">Leadership-Culture-Behavior</div>
+        <h1>
+            <span class="lcb-title">LCB</span><br>
+            <span class="system-title">测评体系</span>
+        </h1>
+        <p class="desc">以安全领导力-安全文化-安全管理行为（LCB）协同联动，重构建设项目安全管理量化评估范式，实现安全管控从“经验驱动”向“数据驱动”转型</p>
+        <button class="demo-btn">查看演示</button>
+    </div>
+
+    <!-- 板块1：安全领导力测评（对应原施工现场视觉识别） -->
+    <div class="section leadership-section">
+        <div class="section-container">
+            <h2 class="section-title">安全领导力</h2>
+            <p class="section-subtitle">Safety Leadership Assessment</p>
+            <div class="content">
+                <div class="media-area">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/3f78fcdd7c3a4baa9afbf33ae71092b3.png~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=202601292029259FA4AEB8218E42409C38&rrcfp=dafada99&x-expires=2085913765&x-signature=aFwjSlh8CX2DKgrbthBU5LlM2Dk%3D" alt="安全领导力模型">
+                </div>
+                <div class="text-area">
+                    <h3>领导力维度识别演示</h3>
+                    <p>基于变革型-契约型双维度框架，精准识别建设单位、总包、分包（班组）层级的安全领导行为，支持“以身作则、愿景激励”等核心维度的量化评估。</p>
+                    <div class="tab-item">
+                        <div class="tab-label">
+                            <span>以身作则</span>
+                        </div>
+                    </div>
+                    <div class="tab-item">
+                        <div class="tab-label">
+                            <span>愿景激励</span>
+                        </div>
+                    </div>
+                    <div class="tab-item">
+                        <div class="tab-label">
+                            <span>绩效管控</span>
+                        </div>
+                    </div>
+                    <div class="tab-item">
+                      <div class="tab-label">
+                          <span>关注尊重</span>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 板块2：安全文化（对应原BIM数字化安全管理） -->
+    <div class="section culture-section">
+        <div class="section-container">
+            <h2 class="section-title">安全文化</h2>
+            <p class="section-subtitle">Safety Culture System</p>
+            <div class="content">
+                <div class="text-area">
+                    <div class="text-card">
+                        聚焦建设项目多主体安全文化互动关系，构建涵盖“安全承诺、管理体系、安全培训、双向沟通”等6大核心维度的测评体系。
+                        <br><br>
+                        解析地域、行业、社会文化与项目安全文化的联动效应，量化文化对施工人员安全认知的渗透效果，为培育积极正向的项目安全文化提供系统化指导。
+                    </div>
+                    <button class="enter-btn">进入测评平台</button>
+                </div>
+                <div class="media-area">
+                    <h3>Safety Culture Model View</h3>
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/069ef9c1e60e4cb18d879a58244fa152.png~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=202601292029259FA4AEB8218E42409C38&rrcfp=dafada99&x-expires=2085913765&x-signature=Bz%2FDabbOYe97UfSBS7q7%2BIqPs6E%3D" alt="安全文化互动模型">
+                    <div class="status">CULTURE CHECK: OPTIMIZED</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 板块3：安全管理行为（对应原全自动吊装路径规划） -->
+    <div class="section behavior-section">
+        <div class="section-container">
+            <h2 class="section-title">安全管理行为</h2>
+            <p class="section-subtitle">Safety Management Behavior</p>
+            <div class="content">
+                <div class="media-area">
+                    <h3>Behavior Simulation</h3>
+                    <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/3f411a93a1be40d19475863f264e3a6b.png~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=202601292029259FA4AEB8218E42409C38&rrcfp=dafada99&x-expires=2085913765&x-signature=%2FrEgHPOTIi%2BzzMoi13eHvCmw5%2B8%3D" alt="LCB协同模型">
+                </div>
+                <div class="text-area">
+                    <h2 class="section-title">不安全行为管控</h2>
+                    <p>以LCB协同理论为基础，构建施工现场安全管理行为测评体系，量化安全领导力、安全文化对施工人员个体安全行为的影响机制，建立不安全行为风险（PUSB）测算模型。</p>
+                    <p>实现从“领导驱动-文化引领-行为落地”的全链条量化评估，为现场安全行为管控提供精准优化方案，典型项目应用后不安全行为发生率下降68%。</p>
+                    <button class="enter-btn">进入行为分析平台</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
